@@ -1,13 +1,13 @@
 {
   "name": "preact-sidenav",
   "amdName": "preactSidenav",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "A compact sidenav",
   "main": "dist/preact-sidenav.js",
   "minified:main": "dist/preact-sidenav.min.js",
   "jsnext:main": "src/sidenav/index.js",
   "scripts": {
-    "prebuild": "mkdir dist && node-sass --output-style compressed src/sidenav/sidenav.scss > dist/sidenav.css",
+    "postbuild": "node-sass --output-style compressed src/sidenav/sidenav.scss > dist/sidenav.css",
     "clean": "rimraf dist/",
     "build": "npm-run-all clean transpile minify size",
     "transpile": "rollup -c rollup.config.js -m ${npm_package_main}.map -f umd -n $npm_package_amdName $npm_package_jsnext_main -o $npm_package_main",
