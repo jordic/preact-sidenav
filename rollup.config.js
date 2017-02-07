@@ -1,30 +1,23 @@
+import fs from 'fs';
 import babel from 'rollup-plugin-babel';
-import es3 from 'rollup-plugin-es3';
-import replace from 'rollup-plugin-post-replace';
+import memory from 'rollup-plugin-memory';
+
+var babelRc = JSON.parse(fs.readFileSync('.babelrc','utf8')); // eslint-disable-line
 
 export default {
-	useStrict: false,
+	exports: 'default',
 	plugins: [
+		memory({
+			path: 'src/sidenav/index',
+			contents: "export { default } from './index';"
+		}),
 		babel({
 			babelrc: false,
-			sourceMap: true,
-			exclude: 'node_modules/**',
 			presets: [
-				['es2015', { modules:false, loose:true }],
-				'stage-0'
-			],
-			plugins: [
-				'transform-class-properties',
-				['transform-react-jsx', { pragma:'h' }]
-			]
-		}),
-
-		// strip Object.freeze()
-		es3(),
-
-		// remove Babel helpers
-		replace({
-			'throw ': 'return; throw '
+				['es2015', { loose:true, modules:false }]
+			].concat(babelRc.presets.slice(1)),
+			plugins: babelRc.plugins,
+			exclude: 'node_modules/**'
 		})
 	]
 };

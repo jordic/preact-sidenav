@@ -4,7 +4,7 @@ import classNames from 'classnames/dedupe';
 
 const ESCAPE = 27;
 
-export class Sidenav extends Component {
+export default class Sidenav extends Component {
 
   state = {
     opened: false
@@ -57,7 +57,7 @@ export class Sidenav extends Component {
 }
 
 
-export class MdSidenav extends Component {
+class MdSidenav extends Component {
 
 
   // @TODO add mode an align support
@@ -100,7 +100,7 @@ export class MdSidenav extends Component {
 }
 
 
-export function MdSidenavContent(props) {
+function MdSidenavContent(props) {
   return (
     <div class='md-sidenav-content'>
       {props.children}
