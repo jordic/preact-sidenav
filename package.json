@@ -17,7 +17,7 @@
     "lint": "eslint {src,test}",
     "test:karma": "karma start --single-run",
     "test:watch": "karma start",
-    "prepublish": "npm-run-all build test",
+    "oldprepublish": "npm-run-all build test",
     "release": "npm run clean && npm run build && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "babel": {
