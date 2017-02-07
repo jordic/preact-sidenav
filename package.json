@@ -1,7 +1,7 @@
 {
   "name": "preact-sidenav",
   "amdName": "Sidenav",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A compact sidenav",
   "main": "dist/preact-sidenav.js",
   "minified:main": "dist/preact-sidenav.min.js",
