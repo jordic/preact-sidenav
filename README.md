@@ -1,30 +1,47 @@
 # preact-sidenav
 
-A simple and basic sidenav.
+Minimal viable sidenav implementation.
 
-> **[CodePen Demo](http://codepen.io/developit/pen/WrxmGx?editors=001)**
+> **[Demo](https://jsfiddle.net/jordic/w118r739/)**
+
+
+Size:
+
+| File | Size | Gzip |
+|------|------|----- |
+| js   | 2,1K | 902B |
+| css  | 2,3K | 626B |
 
 
 
 ### Usage Example
 
-Use `<TokenInput />` like a normal `<input>`. It supports the same props/attributes, including `value`, `onInput()` and `onChange()`.
+Use <Sidenav> and provide content and a navigation var 
 
 ```js
-import TokenInput from 'preact-token-input';
+import Sidenav from 'preact-sidenav';
 
-const Tags = ({ tags, ...props }) => (
-	<label class="tags">
-		Add some tags:
-		<TokenInput value={tags} {...props} />
-	</form>
+import '../node_modules/preact-sidenav/sidenav.css'
+
+
+const Nav = () => (
+  <ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+  </ul>
+)
+
+const App = () => (
+	<Sidenav sidebar={ <Nav /> } 
+    onClose={close} onOpen={open}>
+    <Content />
+  </Sidenav>
 );
 
-let tags = ['new', 'noteworthy', 'tech'];
-render(<Tags list={tags} />, document.body);
+render(<App />, document.body);
 ```
 
-
+Scss file is also provided
 
 
 ### License
