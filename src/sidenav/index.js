@@ -1,9 +1,15 @@
 import { h, cloneElement, Component } from 'preact';
-import classNames from 'classnames/dedupe';
 
 
-const ESCAPE = 27;
-
+/** Minimal material sidenav for mobile target
+ *  @param {Function} onOpen  Handler called on sidenav opened
+ *  @param {Function} onClose Handler called on sidenav closed
+ *  @example
+ *    <Sidenav sidebar={ <Nav /> }
+ *      onOpen={open} onClose={close}>
+ *        <Content />
+ *    </Sidenav>
+ */
 export default class Sidenav extends Component {
 
   state = {
@@ -23,32 +29,21 @@ export default class Sidenav extends Component {
     this.setState((s) => ({opened: true}));
   }
 
-  getClassNames(props) {
-    return classNames('md-sidenav-container', {
-      'md-sidenav-opened': props.opened
-    })
-  }
-
-  getBackdropClass(props) {
-    return classNames('md-sidenav-backdrop', {
-      'md-sidenav-shown': props.opened
-    })
-  }
-
-  render({sidebar, children}, state) {
+  render({sidebar, children}, {opened}) {
     let content = children[0];
     let childProps = {
       openSidenav: this.openSidenav,
-      closeSidenav: this.closeSidenav
+      closeSidenav: this.closeSidenav,
+      opened
     }
     return (
-      <div className={this.getClassNames(state)}>
-        <div className={this.getBackdropClass(state)}
+      <div class={'md-sidenav-container' + ((opened) ? ' md-sidenav-opened' : '')}>
+        <div class={'md-sidenav-backdrop' + ((opened) ? ' md-sidenav-shown': '')}
           onclick={this.closeSidenav}></div>
-        <MdSidenav opened={state.opened}>
+        <MdSidenav opened={opened}>
           {cloneElement(sidebar, childProps)}
         </MdSidenav>
-        <MdSidenavContent opened={state.opened}>
+        <MdSidenavContent opened={opened}>
           {cloneElement(content, childProps)}
         </MdSidenavContent>
       </div>
@@ -56,49 +51,14 @@ export default class Sidenav extends Component {
   }
 }
 
-
-class MdSidenav extends Component {
-
-
-  // @TODO add mode an align support
-  props = {
-    // align: 'start',
-    mode: 'over',
-    opened: false,
-  };
-
-  state = {
-    style: ''
-  };
-
-  getClassNames(props) {
-    return classNames({
-      'md-sidenav-over': props.mode == 'over',
-      // @TODO port the rest of modes
-      // [style['md-sidenav-push']]: props.mode == 'push',
-      // [style['md-sidenav-side']]: props.mode == 'side',
-      'md-sidenav-opened': props.opened
-    })
-  }
-
-  componentWillReceiveProps(nProps) {
-    if(nProps.opened != this.props.opened) {
-      this.setState((s) => ({
-        style: (nProps.opened) ? 'transform: translate3d(0, 0, 0)' : ''
-      }))
-    };
-  }
-
-
-  render(props, {style}) {
-    return (
-      <md-sidenav className={this.getClassNames(props)} style={style}>
-        {props.children}
-      </md-sidenav>
-    )
-  }
+function MdSidenav({opened, children}) {
+  return (
+    <md-sidenav class={'md-sidenav-over' + ((opened) ? ' md-sidenav-opened' : '')}
+      style={(opened) ? 'transform: translate3d(0, 0, 0)' : ''}>
+        {children}
+    </md-sidenav>
+  )
 }
-
 
 function MdSidenavContent(props) {
   return (
