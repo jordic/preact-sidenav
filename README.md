@@ -2,7 +2,7 @@
 
 Minimal viable sidenav implementation.
 
-> **[Demo](https://jsfiddle.net/jordic/w118r739/)**
+> **[Demo](https://jsfiddle.net/jordic/sqj852y4/)**
 
 
 Size:
