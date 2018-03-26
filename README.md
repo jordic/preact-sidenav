@@ -21,22 +21,35 @@ Use <Sidenav> and provide content and a navigation var
 ```js
 import Sidenav from 'preact-sidenav';
 
-import '../node_modules/preact-sidenav/sidenav.css'
+import 'node_modules/preact-sidenav/dist/sidenav.css';
 
+const Nav = (props) => (
+  <div>
+    <ul>
+      <li>Menu item 1</li>
+      <li>Menu item 2</li>
+      <li>Menu item 3</li>
+      <li><button onclick={props.closeSidenav} >Close</button></li>
+    </ul>
 
-const Nav = () => (
-  <ul>
-    <li>Item 1</li>
-    <li>Item 2</li>
-  </ul>
+  </div>
 )
 
-const App = () => (
-	<Sidenav sidebar={ <Nav /> } 
-    onClose={close} onOpen={open}>
-    <Content />
-  </Sidenav>
-);
+class App extends Component {
+
+  onOpen = () => console.log('open');
+  onClose = () => console.log('close');
+
+  render(props, state) {
+		return (
+      <div id="app">
+        <Sidenav sidebar={ <Nav /> } onOpen={this.onOpen} onClose={this.onClose}>
+          <Content />
+        </Sidenav>
+      </div>
+    );
+  }
+}
 
 render(<App />, document.body);
 ```
